@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import { Cell } from '../components/cell'
-import {StyledGrid, StyledSaveButton, MainSection, SideSection, Flex} from './mapblock-creator.styled'
+import {StyledGrid, StyledSaveButton, MainSection, SideSection, Flex} from './grid-editor.styled'
 
 const data = [
     [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
@@ -21,7 +21,7 @@ const data = [
     [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
   ];
 
-const MapBlockCreator = () => {
+const GridEditor = () => {
     const [gridData, update] = useState<number[][]>([]);
 
     useEffect(() => {
@@ -56,4 +56,4 @@ const MapBlockCreator = () => {
     )
 }
 
-export default MapBlockCreator
+export default GridEditor
