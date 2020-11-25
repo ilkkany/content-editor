@@ -20,6 +20,11 @@ export const SideSection = styled.div`
 export const Flex = styled.div`
   display: flex;
   flex-direction: row;
+`;
+
+export const Column = styled.div`
+  display: flex;
+  flex-direction: column;
   margin-top: 10vh;
 `;
 

@@ -1,11 +1,13 @@
 import React, { useState, useEffect } from 'react';
 import Cell from '../components/Grid/Cell';
+import Metadata from '../components/Grid/Metadata'
 import SaveButton from '../components/Grid/Save';
 import {
   StyledGrid,
   MainSection,
   SideSection,
   Flex,
+  Column,
 } from './grid-editor.styled';
 import { gql, useQuery } from '@apollo/client';
 import { client } from '../backend/client';
@@ -45,28 +47,31 @@ const GridEditor = () => {
   };
 
   return (
-    <Flex>
-      <SideSection></SideSection>
-      <MainSection>
-        <StyledGrid background="#36454f">
-          {gridData.map((row, index) => (
-            <div key={"row" + index.toString()}>
-              {row.map((cellId, rowIdx) => (
-                <Cell
-                  value={cellId}
-                  row={index}
-                  column={rowIdx}
-                  key={cellId + index + "column"+rowIdx}
-                  callback={callback}
-                />
-              ))}
-            </div>
-          ))}
-        </StyledGrid>
-        <SaveButton toSave={gridData}>Save</SaveButton>
-      </MainSection>
-      <SideSection></SideSection>
-    </Flex>
+    <Column>
+      <Flex>
+        <SideSection></SideSection>
+        <MainSection>
+          <StyledGrid background="#36454f">
+            {gridData.map((row, index) => (
+              <div key={"row" + index.toString()}>
+                {row.map((cellId, rowIdx) => (
+                  <Cell
+                    value={cellId}
+                    row={index}
+                    column={rowIdx}
+                    key={cellId + index + "column"+rowIdx}
+                    callback={callback}
+                  />
+                ))}
+              </div>
+            ))}
+          </StyledGrid>
+          <SaveButton toSave={gridData}>Save</SaveButton>
+        </MainSection>
+        <SideSection></SideSection>
+      </Flex>
+      <Metadata />
+    </Column>
   );
 };
 
