@@ -4,7 +4,7 @@ import { client } from '../../../backend/client';
 import React from 'react';
 
 const SAVE_GRID = gql`
-  mutation saveGrid($grid: [[Int]]) {
+  mutation saveGrid($grid: [Int!]) {
     saveGrid(grid: $grid) {
       grid
     }
@@ -12,10 +12,10 @@ const SAVE_GRID = gql`
 `;
 
 const SaveButton: React.FC<{ toSave: number[][] }> = ({ toSave, children }) => {
-  const [saveGrid, { data }] = useMutation(SAVE_GRID, { client: client });
+  const [saveGrid, { loading, error, data }] = useMutation(SAVE_GRID, { client: client });
 
   const save = async () => {
-    await saveGrid(toSave);
+    await saveGrid({ variables: { grid: toSave.flat()} });
   };
   return <StyledSaveButton onClick={save}>{children}</StyledSaveButton>;
 };

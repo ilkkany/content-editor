@@ -22,7 +22,7 @@ const CREATE_GRID = gql`
 const GridEditor = () => {
   const [gridData, update] = useState<number[][]>([]);
   const { loading, error, data } = useQuery(CREATE_GRID, { client: client });
-
+  
   useEffect(() => {
     if (!loading && gridData.length === 0) {
       const {
@@ -50,17 +50,17 @@ const GridEditor = () => {
       <MainSection>
         <StyledGrid background="#36454f">
           {gridData.map((row, index) => (
-            <tr key={row[0] + index}>
+            <div key={"row" + index.toString()}>
               {row.map((cellId, rowIdx) => (
                 <Cell
                   value={cellId}
                   row={index}
                   column={rowIdx}
-                  key={cellId + index + rowIdx}
+                  key={cellId + index + "column"+rowIdx}
                   callback={callback}
                 />
               ))}
-            </tr>
+            </div>
           ))}
         </StyledGrid>
         <SaveButton toSave={gridData}>Save</SaveButton>

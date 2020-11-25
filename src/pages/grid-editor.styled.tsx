@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 
-export const StyledGrid = styled.table<{ background?: string }>`
+export const StyledGrid = styled.div<{ background?: string }>`
   display: flex;
   flex-direction: row;
   flex-wrap: wrap;
