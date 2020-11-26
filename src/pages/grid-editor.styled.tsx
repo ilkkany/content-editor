@@ -2,7 +2,7 @@ import styled from 'styled-components';
 
 export const StyledGrid = styled.div<{ background?: string }>`
   display: flex;
-  flex-direction: row;
+  flex-direction: column;
   flex-wrap: wrap;
   width: 640px;
   height: 640px;
@@ -27,5 +27,10 @@ export const Column = styled.div`
   flex-direction: column;
   margin-top: 10vh;
 `;
+
+export const Row = styled.div`
+display: flex;
+flex-direction: row;
+`
 
 export const StyledSaveButton = styled.button``;

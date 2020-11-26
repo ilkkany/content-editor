@@ -3,6 +3,7 @@ import { gql, useMutation } from '@apollo/client';
 import { client } from '../../../backend/client';
 import React from 'react';
 import { Biomes, GridPositions } from '../types';
+import { MetadataValue } from '../../../pages/grid-editor';
 
 const SAVE_GRID = gql`
   mutation saveGrid($grid: [Int!], $position: String, $biome: String) {
@@ -12,11 +13,12 @@ const SAVE_GRID = gql`
   }
 `;
 
-const SaveButton: React.FC<{ toSave: number[][] }> = ({ toSave, children }) => {
+const SaveButton: React.FC<{ toSave: number[][], metadata: MetadataValue }> = ({ toSave, metadata, children }) => {
   const [saveGrid, { loading, error, data }] = useMutation(SAVE_GRID, { client: client });
+  debugger
 
   const save = async () => {
-    await saveGrid({ variables: { grid: toSave.flat(), position: GridPositions.Left, biome: Biomes.SPACE_COLONY} });
+    await saveGrid({ variables: { grid: toSave.flat(), position: metadata.grid, biome: Biomes.SPACE_COLONY} });
   };
   return <StyledSaveButton onClick={save}>{children}</StyledSaveButton>;
 };

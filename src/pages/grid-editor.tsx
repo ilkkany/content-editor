@@ -8,10 +8,12 @@ import {
   SideSection,
   Flex,
   Column,
+  Row,
 } from './grid-editor.styled';
 import { gql, useQuery } from '@apollo/client';
 import { client } from '../backend/client';
 import { clone } from 'ramda';
+import { Floors, GridPositions } from '../components/Grid/types';
 
 const CREATE_GRID = gql`
   query createGrid {
@@ -21,8 +23,19 @@ const CREATE_GRID = gql`
   }
 `;
 
+export interface MetaData {
+  floor: boolean,
+  grid: boolean,
+}
+
+export interface MetadataValue {
+  floor: Floors,
+  grid: GridPositions,
+}
+
 const GridEditor = () => {
   const [gridData, update] = useState<number[][]>([]);
+  const [metadata, setMetadata] = useState<MetadataValue>({} as MetadataValue);
   const { loading, error, data } = useQuery(CREATE_GRID, { client: client });
   
   useEffect(() => {
@@ -46,31 +59,55 @@ const GridEditor = () => {
     update(copy);
   };
 
+  const metadataCallback = (meta: any, field: MetaData) => {
+    debugger
+    if (field.grid) {
+      setMetadata({ grid: meta, floors: metadata.floor })
+    }
+    if (field.floor) {
+      setMetadata({ grid: metadata.grid, floors: meta })
+    }
+  }
+
+  const RenderRow = (row: number[], index: number) => {
+    return (
+      <Row id="row">
+      {
+        row.map((cellId, rowIdx) => (
+          <Cell
+            value={cellId}
+            row={index}
+            column={rowIdx}
+            key={cellId + index + "column"+rowIdx}
+            callback={callback}
+          />
+        ))
+      }
+      </Row>
+    )
+  }
+
+  const RenderGrid = () => {
+    return (
+      <>
+      {gridData.map(RenderRow)}
+      </>
+    )
+  }
+
   return (
     <Column>
       <Flex>
         <SideSection></SideSection>
         <MainSection>
           <StyledGrid background="#36454f">
-            {gridData.map((row, index) => (
-              <div key={"row" + index.toString()}>
-                {row.map((cellId, rowIdx) => (
-                  <Cell
-                    value={cellId}
-                    row={index}
-                    column={rowIdx}
-                    key={cellId + index + "column"+rowIdx}
-                    callback={callback}
-                  />
-                ))}
-              </div>
-            ))}
+            {RenderGrid()}
           </StyledGrid>
-          <SaveButton toSave={gridData}>Save</SaveButton>
+          <SaveButton toSave={gridData} metadata={metadata}>Save</SaveButton>
         </MainSection>
         <SideSection></SideSection>
       </Flex>
-      <Metadata />
+      <Metadata callback={metadataCallback} />
     </Column>
   );
 };
