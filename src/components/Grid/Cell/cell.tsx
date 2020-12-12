@@ -24,7 +24,7 @@ export const Cell: React.FC<{
       setCellValue(cellValue -= 1);
       setClickValue(cellValue -= 1);
     }
-    callback(row, column, cellValue);
+    callback(row, column, clickValue);
   };
 
   return (
