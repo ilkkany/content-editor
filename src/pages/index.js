@@ -5,13 +5,14 @@ import Layout from '../components/layout';
 import SEO from '../components/seo';
 import { ApolloProvider } from '@apollo/client';
 import { client } from '../backend/client';
+import FolderNavigation from '../components/Folder'
 
 const IndexPage = () => {
   return (
     <ApolloProvider client={client}>
       <Layout>
+        <FolderNavigation />
         <SEO title="Home" />
-        <Link to="/grid-editor/">Grid Editor</Link>
       </Layout>
     </ApolloProvider>
   );

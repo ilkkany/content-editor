@@ -15,7 +15,6 @@ const SAVE_GRID = gql`
 
 const SaveButton: React.FC<{ toSave: number[][], metadata: MetadataValue }> = ({ toSave, metadata, children }) => {
   const [saveGrid, { loading, error, data }] = useMutation(SAVE_GRID, { client: client });
-  debugger
 
   const save = async () => {
     await saveGrid({ variables: { grid: toSave.flat(), position: metadata.grid, biome: Biomes.SPACE_COLONY} });

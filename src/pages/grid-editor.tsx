@@ -14,6 +14,8 @@ import { gql, useQuery } from '@apollo/client';
 import { client } from '../backend/client';
 import { clone } from 'ramda';
 import { Floors, GridPositions } from '../components/Grid/types';
+import Legend from '../components/Grid/Legend';
+import { GridProvider } from '../components/Grid/grid-context';
 
 const CREATE_GRID = gql`
   query createGrid {
@@ -60,7 +62,6 @@ const GridEditor = () => {
   };
 
   const metadataCallback = (meta: any, field: MetaData) => {
-    debugger
     if (field.grid) {
       setMetadata({ grid: meta, floors: metadata.floor })
     }
@@ -71,7 +72,7 @@ const GridEditor = () => {
 
   const RenderRow = (row: number[], index: number) => {
     return (
-      <Row id="row">
+      <Row key={"row"+index} id="row">
       {
         row.map((cellId, rowIdx) => (
           <Cell
@@ -96,19 +97,23 @@ const GridEditor = () => {
   }
 
   return (
-    <Column>
-      <Flex>
-        <SideSection></SideSection>
-        <MainSection>
-          <StyledGrid background="#36454f">
-            {RenderGrid()}
-          </StyledGrid>
-          <SaveButton toSave={gridData} metadata={metadata}>Save</SaveButton>
-        </MainSection>
-        <SideSection></SideSection>
-      </Flex>
-      <Metadata callback={metadataCallback} />
-    </Column>
+    <GridProvider value={1}>
+      <Column>
+        <Flex>
+          <SideSection>
+            <Legend />
+          </SideSection>
+          <MainSection>
+            <StyledGrid background="#36454f">
+              {RenderGrid()}
+            </StyledGrid>
+            <SaveButton toSave={gridData} metadata={metadata}>Save</SaveButton>
+          </MainSection>
+          <SideSection></SideSection>
+        </Flex>
+        <Metadata callback={metadataCallback} />
+      </Column>
+    </GridProvider>
   );
 };
 
