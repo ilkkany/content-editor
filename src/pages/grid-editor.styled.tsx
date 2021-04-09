@@ -29,8 +29,8 @@ export const Column = styled.div`
 `;
 
 export const Row = styled.div`
-display: flex;
-flex-direction: row;
-`
+  display: flex;
+  flex-direction: row;
+`;
 
 export const StyledSaveButton = styled.button``;

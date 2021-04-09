@@ -5,7 +5,7 @@ import Layout from '../components/layout';
 import SEO from '../components/seo';
 import { ApolloProvider } from '@apollo/client';
 import { client } from '../backend/client';
-import FolderNavigation from '../components/Folder'
+import FolderNavigation from '../components/Header';
 
 const IndexPage = () => {
   return (

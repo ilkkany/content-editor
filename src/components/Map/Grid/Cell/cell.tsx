@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useContext } from 'react';
 import { StyledCell } from './cell.styled';
 import { GridContext } from '../grid-context';
-import { legendMap } from '../Legend/legend'
+import { legendMap } from '../Legend/legend';
 
 export const Cell: React.FC<{
   value: number;
@@ -10,7 +10,6 @@ export const Cell: React.FC<{
   callback: (row: number, column: number, value: number) => void;
 }> = ({ value, row, column, callback }) => {
   let [cellValue, setCellValue] = useState(value);
-  const { setClickValue, clickValue } = useContext(GridContext);
   useEffect(() => {
     setCellValue(value);
   }, [value]);
@@ -18,13 +17,12 @@ export const Cell: React.FC<{
   const onClick = (e: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
     e.preventDefault();
     if (e.button === 0) {
-      setCellValue(clickValue);
+      setCellValue(cellValue++);
     }
     if (e.button === 2) {
-      setCellValue(cellValue -= 1);
-      setClickValue(cellValue -= 1);
+      setCellValue((cellValue -= 1));
     }
-    callback(row, column, clickValue);
+    callback(row, column, cellValue);
   };
 
   return (

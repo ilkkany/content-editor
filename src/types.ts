@@ -1,7 +1,7 @@
 export enum Folder {
-  Entities = "Entities",
-  GridVariants = "Grid Variants",
-  Items = "Items",
+  Entities = 'Entities',
+  GridVariants = 'Grid Variants',
+  Items = 'Items',
 }
 
 export enum EntitiesFolder {
